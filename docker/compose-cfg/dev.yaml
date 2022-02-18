@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+    app:
+        volumes:
+            - ./:/src/app
+        environment:
+            IMG_ENV: dev
+
+
+    nginx:
+        build:
+            context: ./docker/nginx
+        volumes:
+            - ./public:/src/app/public
+        ports:
+            - "8080:80"
+    postgres:
+        image: postgres:14.2-alpine
+        environment:
+            POSTGRES_USER: app
+            POSTGRES_PASSWORD: nopassword
+        ports:
+            - "5432:5432"
