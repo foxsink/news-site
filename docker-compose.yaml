@@ -2,10 +2,12 @@ version: "3.9"
 services:
     app:
         build:
-            context: ./docker/php
+            context: ./
+            dockerfile: docker/php/Dockerfile
+        volumes:
+            - ./:/src/app
     nginx:
         build:
-            context: ./
-            dockerfile: docker/nginx
+            context: ./docker/nginx
         ports:
             - "8080:80"
