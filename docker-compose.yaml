@@ -6,8 +6,11 @@ services:
             dockerfile: docker/php/Dockerfile
         volumes:
             - ./:/src/app
+
     nginx:
         build:
             context: ./docker/nginx
+        volumes:
+            - ./public:/src/app/public
         ports:
             - "8080:80"
