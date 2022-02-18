@@ -1,0 +1,11 @@
+version: "3.9"
+services:
+    app:
+        build:
+            context: ./docker/php
+    nginx:
+        build:
+            context: ./
+            dockerfile: docker/nginx
+        ports:
+            - "8080:80"
