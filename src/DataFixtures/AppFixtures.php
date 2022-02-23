@@ -14,13 +14,13 @@ class AppFixtures extends Fixture implements FixtureGroupInterface
 
     public function load(ObjectManager $manager): void
     {
-        if ($manager->find(User::class, 1)) {
+        if ($manager->getRepository(User::class)->findOneBy(['username' => 'login'])) {
             return;
         }
         $user = new User();
         $user->setUsername('login');
-        $user->setPassword($this->passwordHasher->hashPassword($user, 'password'));
         $user->setRoles(['ROLE_ADMIN']);
+        $user->setPassword($this->passwordHasher->hashPassword($user, 'password'));
         $manager->persist($user);
         $manager->flush();
     }

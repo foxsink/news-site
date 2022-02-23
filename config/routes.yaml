@@ -5,3 +5,20 @@ controllers:
 kernel:
     resource: ../src/Kernel.php
     type: annotation
+
+login:
+    path: /login
+    controller: App\Controller\LoginController::indexAction
+
+logout:
+    path: /logout
+
+news:
+    path:
+        - /
+        - /news
+    controller: App\Controller\NewsController::indexAction
+
+article:
+    path: /news/{title}
+    controller: App\Controller\NewsController::showAction

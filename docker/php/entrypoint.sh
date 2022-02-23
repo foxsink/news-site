@@ -35,5 +35,8 @@ fi
 
 bin/console doctrine:fixtures:load --group=initAdmin --purge-exclusions=users --no-interaction
 
+yarn install
+yarn encore dev --watch &
+
 echo "running php-fpm"
 exec php-fpm
