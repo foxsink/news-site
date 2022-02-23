@@ -5,6 +5,7 @@ services:
             - ./:/src/app
         environment:
             IMG_ENV: dev
+            DATABASE_URL: postgresql://app:nopassword@postgres:5432/app?serverVersion=14.2&charset=utf8
 
 
     nginx:
@@ -21,3 +22,7 @@ services:
             POSTGRES_PASSWORD: nopassword
         ports:
             - "5432:5432"
+        volumes:
+            - db-data:/var/lib/postgresql/data
+volumes:
+    db-data:

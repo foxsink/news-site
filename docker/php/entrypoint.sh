@@ -29,8 +29,11 @@ else
 fi
 
 if ls -A migrations/*.php >/dev/null 2>&1; then
-    bin/console doctrine:migrations:migrate --no-interaction --all-or-nothing
+  bin/console doctrine:migrations:migrate --no-interaction --all-or-nothing
+
 fi
+
+bin/console doctrine:fixtures:load --group=initAdmin --purge-exclusions=users --no-interaction
 
 echo "running php-fpm"
 exec php-fpm
