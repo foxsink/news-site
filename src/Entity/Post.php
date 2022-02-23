@@ -43,4 +43,148 @@ class Post
     {
         $this->comments = new ArrayCollection();
     }
+
+    /**
+     * @return int|null
+     */
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param int|null $id
+     * @return Post
+     */
+    public function setId(?int $id): Post
+    {
+        $this->id = $id;
+        return $this;
+    }
+
+    /**
+     * @return ArrayCollection|Collection
+     */
+    public function getComments(): ArrayCollection|Collection
+    {
+        return $this->comments;
+    }
+
+    /**
+     * @param ArrayCollection|Collection $comments
+     * @return Post
+     */
+    public function setComments(ArrayCollection|Collection $comments): Post
+    {
+        $this->comments = $comments;
+        return $this;
+    }
+
+    /**
+     * @return Category|null
+     */
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param Category|null $category
+     * @return Post
+     */
+    public function setCategory(?Category $category): Post
+    {
+        $this->category = $category;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    /**
+     * @param string|null $title
+     * @return Post
+     */
+    public function setTitle(?string $title): Post
+    {
+        $this->title = $title;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getText(): ?string
+    {
+        return $this->text;
+    }
+
+    /**
+     * @param string|null $text
+     * @return Post
+     */
+    public function setText(?string $text): Post
+    {
+        $this->text = $text;
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAnnounce(): ?string
+    {
+        return $this->announce;
+    }
+
+    /**
+     * @param string|null $announce
+     * @return Post
+     */
+    public function setAnnounce(?string $announce): Post
+    {
+        $this->announce = $announce;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param bool $isActive
+     * @return Post
+     */
+    public function setIsActive(bool $isActive): Post
+    {
+        $this->isActive = $isActive;
+        return $this;
+    }
+
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @param \DateTimeInterface|null $createdAt
+     * @return Post
+     */
+    public function setCreatedAt(?\DateTimeInterface $createdAt): Post
+    {
+        $this->createdAt = $createdAt;
+        return $this;
+    }
 }
