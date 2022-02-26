@@ -33,7 +33,7 @@ if ls -A migrations/*.php >/dev/null 2>&1; then
 
 fi
 
-bin/console doctrine:fixtures:load --group=initAdmin --purge-exclusions=users --no-interaction
+bin/console doctrine:fixtures:load --append --no-interaction
 
 yarn install
 yarn encore dev --watch &

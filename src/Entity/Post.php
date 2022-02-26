@@ -6,6 +6,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation\Timestampable;
 use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity()]
@@ -37,6 +38,7 @@ class Post
     private bool $isActive = false;
 
     #[ORM\Column(type: 'datetime')]
+    #[Timestampable(on: 'create')]
     private ?\DateTimeInterface $createdAt = null;
 
     #[Pure] public function __construct()
