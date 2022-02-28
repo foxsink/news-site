@@ -17,7 +17,7 @@ _news:
     path: /
     controller: App\Controller\NewsController::indexAction
 news:
-    path: /news/{page}
+    path: /news/page/{page}
     controller: App\Controller\NewsController::indexAction
 
 article:
