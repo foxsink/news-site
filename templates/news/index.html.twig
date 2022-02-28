@@ -1,28 +1,33 @@
-{% extends 'base.html.twig' %}
+{% extends 'layout/base_layout.html.twig' %}
 
 {% block title %}News{% endblock %}
 
-{% block body %}
-    {% for post in paginator %}
-        <div>
-            {{ post.title }}
-            <br>
-            {{ post.announce }}
-        </div>
-    {% endfor %}
-    <nav aria-label="Page navigation example">
-        <ul class="pagination">
-            {% if pageNumber - 1 > 0 %}
-                <li class="page-item"><a class="page-link" href="{{ path('news', {'page': pageNumber - 1}) }}?order={{ order }}">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="{{ path('news', {'page': pageNumber - 1}) }}?order={{ order }}">{{ pageNumber - 1 }}</a></li>
-            {% endif %}
-            <li class="page-item"><a class="page-link" href="{{ path('news', {'page': pageNumber }) }}?order={{ order }}">{{ pageNumber }}</a></li>
-            {% if pageNumber + 1 <= pageCount %}
-                <li class="page-item"><a class="page-link" href="{{ path('news', {'page': pageNumber + 1}) }}?order={{ order }}">{{ pageNumber + 1 }}</a></li>
-                <li class="page-item"><a class="page-link" href="{{ path('news', {'page': pageNumber + 1}) }}?order={{ order }}">Next</a></li>
-            {% endif %}
-        </ul>
-    </nav>
-    <a href="{{ path('news', {'page': pageNumber}) }}?order=ASC">ASC</a>
-    <a href="{{ path('news', {'page': pageNumber}) }}?order=DESC">DESC</a>
+{% block content %}
+    <div class="d-flex flex-column align-items-center w-100">
+        {% for post in paginator %}
+            <div class="d-flex flex-column card w-100 mt-5">
+                <div class="card-header">
+                    {{ post.title }}
+                </div>
+                <div class="card-body">
+                    {{ post.announce }}
+                </div>
+            </div>
+        {% endfor %}
+        <nav aria-label="Page navigation example" class="mt-5">
+            <ul class="pagination">
+                {% if pageNumber - 1 > 0 %}
+                    <li class="page-item"><a class="page-link" href="{{ path('news', {'page': pageNumber - 1}) }}?order={{ order }}">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="{{ path('news', {'page': pageNumber - 1}) }}?order={{ order }}">{{ pageNumber - 1 }}</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="{{ path('news', {'page': pageNumber }) }}?order={{ order }}">{{ pageNumber }}</a></li>
+                {% if pageNumber + 1 <= pageCount %}
+                    <li class="page-item"><a class="page-link" href="{{ path('news', {'page': pageNumber + 1}) }}?order={{ order }}">{{ pageNumber + 1 }}</a></li>
+                    <li class="page-item"><a class="page-link" href="{{ path('news', {'page': pageNumber + 1}) }}?order={{ order }}">Next</a></li>
+                {% endif %}
+            </ul>
+        </nav>
+        <a href="{{ path('news', {'page': pageNumber}) }}?order=ASC">ASC</a>
+        <a href="{{ path('news', {'page': pageNumber}) }}?order=DESC">DESC</a>
+    </div>
 {% endblock %}

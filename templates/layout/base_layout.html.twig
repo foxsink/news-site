@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="d-flex flex-grow-1 flex-row">
+        <div class="d-flex w-25 flex-column flex-grow-1">
+            {{ render(controller('App\\Controller\\CategoryController::renderMenu')) }}
+        </div>
+        <div class="d-flex w-50 flex-column flex-grow-1 pt-5">
+            {% block content %}
+            {% endblock %}
+        </div>
+        <div class="d-flex w-25 flex-column flex-grow-1">
+        </div>
+    </div>
+{% endblock %}

@@ -3,12 +3,13 @@
 
 namespace App\Entity;
 
+use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use JetBrains\PhpStorm\Pure;
 
-#[ORM\Entity()]
+#[ORM\Entity(repositoryClass: CategoryRepository::class)]
 #[ORM\Table(name:'categories')]
 class Category
 {

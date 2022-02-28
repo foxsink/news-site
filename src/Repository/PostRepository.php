@@ -28,6 +28,7 @@ class PostRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('p');
         $qb
+            ->where('p.isActive = true')
             ->orderBy('p.id', $order)
             ->setFirstResult($page * $maxResults)
             ->setMaxResults($maxResults)
