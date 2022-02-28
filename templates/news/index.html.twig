@@ -3,5 +3,21 @@
 {% block title %}News{% endblock %}
 
 {% block body %}
-    This is index!
+
+    {% for post in paginator %}
+        <div>
+            {{ post.title }}
+            <br>
+            {{ post.announce }}
+        </div>
+    {% endfor %}
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item"><a class="page-link" href="{{ path('news', {'page': pageNumber - 1}) }}">Previous</a></li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="{{ path('news', {'page': pageNumber + 1}) }}">Next</a></li>
+        </ul>
+    </nav>
 {% endblock %}

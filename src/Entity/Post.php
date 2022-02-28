@@ -3,13 +3,14 @@
 
 namespace App\Entity;
 
+use App\Repository\PostRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation\Timestampable;
 use JetBrains\PhpStorm\Pure;
 
-#[ORM\Entity()]
+#[ORM\Entity(repositoryClass: PostRepository::class)]
 #[ORM\Table(name:'posts')]
 class Post
 {

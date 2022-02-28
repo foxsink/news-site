@@ -13,10 +13,11 @@ login:
 logout:
     path: /logout
 
+_news:
+    path: /
+    controller: App\Controller\NewsController::indexAction
 news:
-    path:
-        - /
-        - /news
+    path: /news/{page}
     controller: App\Controller\NewsController::indexAction
 
 article:

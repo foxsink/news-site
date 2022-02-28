@@ -12,15 +12,13 @@ setfacl -dR -m u:www-data:rwX -m u:"$(whoami)":rwX var
 setfacl -R -m u:www-data:rwX -m u:"$(whoami)":rwX var
 
 RETRY=60
-until [ $RETRY -eq 0 ] || ERROR=$(bin/console doctrine:dbal:run-sql "SELECT 1" 2>&1); do
+until [ $RETRY -eq 0 ] || ERROR=$(bin/console doctrine:query:sql "SELECT 1" 2>&1); do
   sleep 1
   echo "Try to connect to database... $RETRY retries left"
 
-  retry=$((retry - 1))
-
-  break
+  RETRY=$((RETRY - 1))
 done
-if [ $retry -eq 0 ]; then
+if [ $RETRY -eq 0 ]; then
   echo "Can't connect to database..."
   echo "$ERROR"
   exit 1
