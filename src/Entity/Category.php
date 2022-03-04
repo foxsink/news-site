@@ -7,6 +7,8 @@ use App\Repository\CategoryRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\HasLifecycleCallbacks;
+use Doctrine\Persistence\Event\PreUpdateEventArgs;
 use JetBrains\PhpStorm\Pure;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
@@ -14,7 +16,7 @@ use JetBrains\PhpStorm\Pure;
 class Category
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     #[ORM\Column(type: 'integer')]
     private ?int $id = null;
 
@@ -125,5 +127,14 @@ class Category
     {
         $this->name = $name;
         return $this;
+    }
+
+    public function preUpdate(PreUpdateEventArgs $event)
+    {
+        if ($event->hasChangedField('parentCategory')) {
+            /** @var Category $obj */
+            $obj = $event->getObject();
+            $obj->setChildCategories(new ArrayCollection());
+        }
     }
 }

@@ -28,3 +28,13 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
             - [ setAnnotationReader, [ "@annotation_reader" ] ]
+
+    admin.category:
+        class: App\Admin\CategoryAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Category, manager_type: orm, label: Category }
+
+    admin.post:
+        class: App\Admin\PostAdmin
+        tags:
+            - { name: sonata.admin, model_class: App\Entity\Post, manager_type: orm, label: Post }

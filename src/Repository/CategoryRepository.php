@@ -21,13 +21,14 @@ class CategoryRepository extends ServiceEntityRepository
     /**
      * @return Category[]
      */
-    public function getLowerCategories(): array
+    public function getCategoriesWithPosts(): array
     {
         $qb = $this->createQueryBuilder('c');
         $qb
             ->distinct()
-            ->leftJoin('c.posts', 'p', Join::WITH, 'p.category = c.id')
+            ->leftJoin('c.posts', 'p')
             ->where('p.isActive = true')
+            ->orderBy('c.id', 'ASC')
         ;
         return $qb->getQuery()->getResult();
     }
