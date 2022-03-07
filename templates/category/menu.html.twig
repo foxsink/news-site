@@ -1,34 +1,31 @@
 <div class="d-flex flex-column w-100">
     {% for tree in trees %}
         <div class="d-flex flex-column w-100">
-            <div class="d-flex">
-                {% set depth = 0 %}
-                {% for elem in tree %}
+            <div class="d-flex flex-column">
+                {% set depthKey = 0 %}
+                {% for depth in tree %}
 
+                    <div class="d-flex mx-5">
+                        <div class="me-2 align-self-center">
+                            Depth = {{ depthKey }}
+                            {% set depthKey = depthKey + 1 %}
+                        </div>
+                    {% for parentKey in depth %}
 
-                    {% if elem is iterable %}
-                        <div class="d-flex flex-column">
-                            {% if depth == elem.depth %}
-                                <div class="d-flex flex-column">
-                            {% else %}
-                                {% set depth = depth + 1 %}
+                        {% if parentKey is iterable %}
+                            <div class="d-flex ms-5">
+                                <div class="mx-2">parent: {{ parentKey[0].parentCategory.name }}</div>
+                                {% for categoryArr in parentKey %}
                                     <div>
-                            {% endif %}
-                            {% for categoryArr in elem %}
-                                {% for category in categoryArr %}
-                                    <div>
-                                        | {{ category.name }} parent: {{ category.parentCategory.name }} |
+                                        | {{ categoryArr.name }} |
                                     </div>
                                 {% endfor %}
-                            {% endfor %}
-                            {% if depth == elem.depth %}
-                                </div>
-                            {% endif %}
-                        </div>
-                    {% else %}
-                        <h3>{{ elem.name }}</h3>
-                    {% endif %}
-
+                            </div>
+                        {% else %}
+                            <h3 class="m-0">{{ parentKey.name }}</h3>
+                        {% endif %}
+                    {% endfor %}
+                    </div>
                 {% endfor %}
             </div>
         </div>

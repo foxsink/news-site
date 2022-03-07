@@ -17,12 +17,21 @@ class CategoryController extends AbstractController
      */
     public function renderMenu(CategoryRepository $repository): Response
     {
+        /*
+         * Solution in general, also it can be solved in more optimized way.
+         * For example you can use ajax from front to load new categories, so it will be much easier.
+         * But in this situation you can't see whole tree from the start, you will have to click a lot.
+         */
         $categories = $repository->getCategoriesWithPosts();
+        $categoriesClone = $categories;
         $trees = [];
-        foreach ($categories as $category) {
+        foreach ($categoriesClone as $category) {
             $branch = [];
             $depth = 0;
             while ($parent = $category->getParentCategory()) {
+                if (in_array($parent, $branch)) {
+                    throw new CircularReferenceException('Circular reference!');
+                }
                 if (in_array($parent, $categories)) {
                     $branch[$parent->getId()] = $category;
                     $category = $parent;
@@ -42,63 +51,42 @@ class CategoryController extends AbstractController
                     break;
                 }
             }
+            $branch[0] = $category;
             if (count($trees) === 0) {
-                $trees[0][0] = $category;
+                $trees[0][0][0] = $category;
             }
             foreach ($trees as $treeKey => $root) {
-                if (!in_array($category, array_column($trees, 0))) {
-                    $trees[][] = $category;
+
+                if (!in_array([$category], array_column($trees, 0))) {
+                    $trees[][] = [$category];
                     continue;
                 }
-                foreach ($branch as $k => $v) {
-                    if (!isset($root[$k])) {
-                        $trees[$treeKey][$k] = ['depth' => $depth];
-                    }
-                    if (!in_array([$v], $trees[$treeKey][$k])) {
-                        $trees[$treeKey][$k][] = [$v];
-                    }
-                }
 
+                if ([$category] !== $root[0]) {
+                    continue;
+                }
+                if (empty(array_column($root, $depth))) {
+                    $trees[$treeKey][$depth] = [];
+                }
+                foreach ($branch as $parentKey => $v) {
+                    if ($parentKey === 0) {
+                        continue;
+                    }
+                    if (empty($trees[$treeKey][$depth][$parentKey])) {
+                        $trees[$treeKey][$depth][$parentKey] = [];
+                    }
+
+                    if (!in_array($v, $trees[$treeKey][$depth][$parentKey])) {
+                        $trees[$treeKey][$depth][$parentKey][] = $v;
+
+                    }
+                    $depth--;
+                }
             }
         }
-//        dd($trees);
+
         return $this->render('category/menu.html.twig', [
             'trees' => $trees,
         ]);
-    }
-
-    private function isParent(Category $parent, Category $child): bool
-    {
-        $upper = $child->getParentCategory();
-        if (!$upper) {
-            return false;
-        }
-        if ($upper === $parent) {
-            return true;
-        } else {
-            return $this->isParent($upper, $parent);
-        }
-    }
-
-    /**
-     * @param Category[] $categories
-     */
-    private function findUniqueBranchOfTree(iterable $categories = []): array
-    {
-        if (empty($categories)) {
-            return [];
-        }
-        $platform = [];
-        foreach ($categories as $category) {
-            $children = $this->findUniqueBranchOfTree($category->getChildCategories());
-            if (empty($children)) {
-                $platform[] = $category;
-                continue;
-            }
-            $platform[] = $children;
-            $platform[] = $category;
-
-        }
-        return $platform;
     }
 }
